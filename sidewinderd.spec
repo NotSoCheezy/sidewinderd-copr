@@ -8,7 +8,8 @@ Summary: This project provides support for gaming peripherals under Linux.
 Url: https://github.com/tolga9009/%{srcname}
 Source0: %{name}-%{version}.tar.gz
 
-BuildArch: noarch
+BuildArch: x86_64
+#BuildArch: noarch
 
 BuildRequires: cmake
 BuildRequires: libconfig-devel
@@ -21,12 +22,15 @@ This project provides support for gaming peripherals under Linux. It was origina
 #-- PREP, BUILD & INSTALL -----------------------------------------------------#
 %prep
 %autosetup
+mkdir build
 
 %build
-%py3_build
+cd build
+cmake ..
+make
 
 %install
-%py3_install
+make install
 
 #-- FILES ---------------------------------------------------------------------#
 %files
@@ -36,6 +40,4 @@ This project provides support for gaming peripherals under Linux. It was origina
 
 #-- CHANGELOG -----------------------------------------------------------------#
 %changelog
-
-
-
+* Fri May 30 2025 Cassandra Erica <cheezy> 0.4.4-1
