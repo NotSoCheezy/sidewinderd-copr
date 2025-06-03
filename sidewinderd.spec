@@ -2,16 +2,18 @@
 
 Name: sidewinderd
 Version: 0.4.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 Summary: This project provides support for gaming peripherals under Linux.
 Url: https://github.com/tolga9009/%{srcname}
-Source0: %{name}-%{version}.tar.gz
+Source0: %{srcname}-%{version}.tar.gz
 
-BuildArch: x86_64
+#ExclusiveArch: x86_64
 #BuildArch: noarch
 
 BuildRequires: cmake
+BuildRequires: gcc
+BuildRequires: g++
 BuildRequires: libconfig-devel
 BuildRequires: tinyxml2-devel
 BuildRequires: libudev-devel
@@ -21,23 +23,26 @@ This project provides support for gaming peripherals under Linux. It was origina
 
 #-- PREP, BUILD & INSTALL -----------------------------------------------------#
 %prep
-%autosetup
-mkdir build
+#%autosetup
+%setup -q
 
 %build
-cd build
-cmake ..
+cmake .
 make
 
 %install
-make install
+make install DESTDIR=%{buildroot}
 
 #-- FILES ---------------------------------------------------------------------#
 %files
 #%doc README.md
-%license LICENSE
-%{_bindir}/sidewinderd
+#%license LICENSE
+%{_exec_prefix}/local/bin/sidewinderd
+%{_exec_prefix}/local/lib/systemd/system/sidewinderd.service
+%{_sysconfdir}/sidewinderd.conf
 
 #-- CHANGELOG -----------------------------------------------------------------#
 %changelog
-* Fri May 30 2025 Cassandra Erica <cheezy> 0.4.4-1
+* Mon Jun 02 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4-2
+- Initial package
+
