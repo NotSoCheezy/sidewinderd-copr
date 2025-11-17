@@ -2,7 +2,7 @@
 
 Name: sidewinderd
 Version: 0.4.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: MIT
 Summary: This project provides support for gaming peripherals under Linux.
 Url: https://github.com/tolga9009/%{srcname}
@@ -35,14 +35,18 @@ make install DESTDIR=%{buildroot}
 
 #-- FILES ---------------------------------------------------------------------#
 %files
-#%doc README.md
+%doc README.md
 #%license LICENSE
 %{_exec_prefix}/local/bin/sidewinderd
 %{_exec_prefix}/local/lib/systemd/system/sidewinderd.service
-%{_sysconfdir}/sidewinderd.conf
+%config(noreplace) %{_sysconfdir}/sidewinderd.conf
 
 #-- CHANGELOG -----------------------------------------------------------------#
 %changelog
+
+* Mon Nov 17 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4-3
+- Config is no longer overwritten from previous installation
+- Install README.md
+
 * Mon Jun 02 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4-2
 - Initial package
-
