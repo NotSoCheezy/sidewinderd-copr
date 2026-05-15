@@ -1,0 +1,56 @@
+%global srcname sidewinderd
+
+Name: sidewinderd
+Version: 0.4.4e1
+Release: 1%{?dist}
+License: MIT
+Summary: This project provides support for gaming peripherals under Linux.
+Url: https://github.com/tolga9009/%{srcname}
+Source0: %{srcname}-%{version}.tar.xz
+
+#ExclusiveArch: x86_64
+#BuildArch: noarch
+
+BuildRequires: cmake
+BuildRequires: gcc
+BuildRequires: g++
+BuildRequires: libconfig-devel
+BuildRequires: tinyxml2-devel
+BuildRequires: libudev-devel
+
+%description
+This project provides support for gaming peripherals under Linux. It was originally designed for the Microsoft SideWinder X4, but we have extended support for more keyboards. Our goal is to create a framework-like environment for rapid driver development under Linux.
+
+#-- PREP, BUILD & INSTALL -----------------------------------------------------#
+%prep
+#%autosetup
+%setup -q
+
+%build
+cmake .
+make
+
+%install
+make install DESTDIR=%{buildroot}
+
+#-- FILES ---------------------------------------------------------------------#
+%files
+%doc README.md
+#%license LICENSE
+%{_exec_prefix}/local/bin/sidewinderd
+%{_exec_prefix}/local/lib/systemd/system/sidewinderd.service
+%config(noreplace) %{_sysconfdir}/sidewinderd.conf
+
+#-- CHANGELOG -----------------------------------------------------------------#
+%changelog
+
+* Mon Nov 17 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4e1-1
+- Updated minimum cmake to 3.10
+- Added default delay to keystroke recordings
+
+* Mon Nov 17 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4-3
+- Config is no longer overwritten from previous installation
+- Install README.md
+
+* Mon Jun 02 2025 NotSoCheezy <redacted@gmail.com> - 0.4.4-2
+- Initial package
